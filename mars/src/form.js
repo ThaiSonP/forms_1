@@ -12,50 +12,63 @@ class Form extends React.Component{
       country:"",
       dietary:'',
       reason:'',
-      completed:false
+      completed:false,
+      breathe: ''
     }
     this.handleChange = this.handleChange.bind(this);
   }
   handleChange(event){
     this.setState({[event.target.name]:event.target.value})
   }
-  // makeOptions(list){
-  //   for(let i = 0 ;i >list.length;i++){
-  //     <option value = list[i]['name']>{list[i]['code']}</option>
-  //   }
-  // }
-  completeForm(){
+  makeOption(){
+    let thing = []
+    for(let i = 0 ;i <list.length;i++){
+       thing.push(<option key = {i} value={list[i]['name']} >{list[i]['code']}</option>)
+    }return (thing)
+  }
+  preventDefault = (event) => {
+    event.preventDefault()
+  }
+  completeForm = () => {
     this.setState({
       completed : true
     })
-    debugger
+  }
+  reviewThing = () =>{
+    return <div>[this.state]</div>
   }
 
+
   render(){
+    const { name, birthday, dietary, reason,completed } = this.state;
     console.log(this.state)
+    if(!completed){
     return(
       <>
+        <div className = 'header'>
         <h1> Mission to Mars Registration Form</h1>
+        </div>
         <div className = 'formDiv'>
-          <form>
+          <form onChange={this.handleChange} onSubmit={this.preventDefault} >
             <label htmlFor = 'name'>What is your name?</label>
-            <input onChange={this.handleChange} type = 'text' placeholder = 'name' name = 'name' value = {this.state.name}/>
+            <input  type = 'text' placeholder = 'name' name = 'name' value = {name}/>
             <br/>
 
             <label htmlFor="birthday">What is your birthday?</label>
-            <input onChange = {this.handleChange} type="date" name="birthday"  max="3000-12-31" value ={this.state.birthday}/>
+            <input  type="date" name="birthday"  max="3000-12-31" value ={birthday}/>
             <br/>
 
             <label htmlFor="country">What is your country of origin? </label>
-            <select input onChange={this.handleChange} name = 'country' value = {this.state.country} >
-            <option >Choose your country</option>
-            <option value = 'Afghanistan'>AF</option>
+
+            <select name="country">
+              <option disabled> countries</option>
+              {this.makeOption()}
             </select>
             <br/>
 
             <label htmlFor="dietary">What is your dietary preference?</label>
-            <select input onChange={this.handleChange} name = 'dietary' value = {this.state.dietary} >
-            <option> Choose your dietary preference</option>
+            <select input  name = 'dietary' value = {dietary} >
+            <option > Choose your dietary preference</option>
             <option value = 'omnivore'>omnivore</option>
             <option value = 'vegetarian'>vegetarian</option>
             <option value = 'vegan'>vegan</option>
@@ -63,14 +76,87 @@ class Form extends React.Component{
             <br/>
 
             <label htmlFor = 'reason'>Why do you want to be a Mars explorer?</label>
-            <input className = 'reason' onChange={this.handleChange} type = 'text' placeholder = 'reason' name = 'reason' value = {this.state.reason}/>
+            <br/>
+            <input className = 'reason' type = 'text' placeholder = 'I want to see explore because...' name = 'reason' value = {reason}/>
             <br/>
 
-            <button onClick= {this.completeForm}> Submit </button>
+            <input type = 'submit' onClick= {this.reviewThing()} / >
           </form>
+
+          </div>
+        <br/>
+        <div className = 'forms2Div'>
+        <div className = 'radioDiv'>
+          <label htmlFor='breathe'>Can you breathe underwater longer than 1 minute?</label>
+          <br/>
+          <div>
+            <input type = 'radio' name = 'breathe' value = 'yes' />
+            Yes
+          </div>
+          <div>
+            <input type = 'radio' name = 'breathe' value = 'no' />
+            No
+          </div>
+          <div>
+            <input type = 'radio' name = 'breathe' value = "I don't know" />
+            I don't know
+          </div>
+        </div>
+        <div className = 'maritalDiv'>
+          <label htmlFor='marital'>What is your marital status?</label>
+            <br/>
+            <div>
+              <input type = 'radio' name = 'marital' value = 'Married' />
+              Married
+            </div>
+            <div>
+              <input type = 'radio' name = 'marital' value = 'Unmarried' />
+              Unmarried
+            </div>
+        </div>
+        <div className = 'situationDiv'>
+          <label htmlFor='situation'>When you are in a stressful or difficult situation, how do you most frequently react?</label>
+            <br/>
+            <div>
+              <input type = 'radio' name = 'situation' value = 'Determination' />
+              Determination: I continue to confront the situation.
+            </div>
+            <div>
+              <input type = 'radio' name = 'situation' value = 'Defeat' />
+              Defeat: I stop confronting the situation.
+            </div>
+            <div>
+              <input type = 'radio' name = 'situation' value = 'Anger' />
+              Anger: I become upset at the situation.
+            </div>
+            <div>
+              <input type = 'radio' name = 'situation' value = 'Resourcefulness' />
+              Resourcefulness: I seek help to confront the situation.
+            </div>
+        </div>
+        <div className = 'claustrophobic'>
+          <label htmlFor='claustrophobicDiv'>Are you claustrophobic?</label>
+            <br/>
+            <div>
+              <input type = 'radio' name = 'claustrophobic' value = 'Yes' />
+              Yes
+            </div>
+            <div>
+              <input type = 'radio' name = 'claustrophobic' value = 'No' />
+              No
+            </div>
+            <div>
+              <input type = 'radio' name = 'claustrophobic' value = "I don't know" />
+              I don't know
+            </div>
+        </div>
         </div>
       </>
-    )
+      )
+    }else{
+      return(
+      <p>Thank you for your application</p>
+    )}
   }
 }
 
