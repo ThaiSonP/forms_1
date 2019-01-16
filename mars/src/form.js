@@ -12,8 +12,10 @@ class Form extends React.Component{
       country:"",
       dietary:'',
       reason:'',
-      completed:false,
-      breathe: ''
+      incomplete:true,
+      breathe: '',
+      family: '',
+
     }
     this.handleChange = this.handleChange.bind(this);
   }
@@ -29,15 +31,16 @@ class Form extends React.Component{
   preventDefault = (event) => {
     event.preventDefault()
   }
-  completeForm = () => {
+  changeState = () => {
     this.setState({
-      completed : true
+      incomplete : !this.state.incomplete
     })
   }
-  reviewThing = () =>{
-    return <div>[this.state]</div>
+  reviewThing (){
+    if (this.state.completed === true){
+      return <div>banan</div>
+    }
   }
-
 
   render(){
     const { name, birthday, dietary, reason,completed } = this.state;
@@ -80,7 +83,9 @@ class Form extends React.Component{
             <input className = 'reason' type = 'text' placeholder = 'I want to see explore because...' name = 'reason' value = {reason}/>
             <br/>
 
-            <input type = 'submit' onClick= {this.reviewThing()} / >
+            <input type = 'submit' onClick= {this.changeState}  >
+              
+            </input>
           </form>
 
           </div>
@@ -148,8 +153,11 @@ class Form extends React.Component{
             <div>
               <input type = 'radio' name = 'claustrophobic' value = "I don't know" />
               I don't know
+
             </div>
         </div>
+          <div className = 'family'>
+          </div>
         </div>
       </>
       )
@@ -159,5 +167,7 @@ class Form extends React.Component{
     )}
   }
 }
+
+
 
 export default Form
